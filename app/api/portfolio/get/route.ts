@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { store } from "../../_store";
+import { users, portfolios } from "@/lib/store";
+
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
