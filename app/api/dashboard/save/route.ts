@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
 import { users, portfolios } from "@/lib/store";
 
-
 export async function POST(req: Request) {
   const { username, portfolio } = await req.json();
 
-  if (!store.users[username]) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  // Check if user exists
+  if (!users.has(username)) {
+    return NextResponse.json(
+      { error: "User not found" },
+      { status: 404 }
+    );
   }
 
-  store.users[username].portfolio = portfolio;
+  // Save / update portfolio
+  portfolios.set(username, portfolio);
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({
+    success: true,
+    portfolio: portfolios.get(username),
+  });
 }
