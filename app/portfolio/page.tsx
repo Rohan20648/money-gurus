@@ -97,6 +97,15 @@ export default function Portfolio() {
           <Stat title="📈 Investments per Month" value={`₹${data.investment}`} />
         </section>
 
+        {data.userType === "student" && (
+  <button
+    onClick={() => (window.location.href = "/borrow")}
+    className="w-full bg-yellow-400 text-black py-3 rounded-xl font-semibold hover:scale-105 transition"
+  >
+    🤝 Borrow Money
+  </button>
+)}
+
         {/* 🤖 Guru Advice */}
         <section className="bg-white/5 backdrop-blur p-6 rounded-2xl shadow-lg">
           <h3 className="text-xl font-bold mb-2">🤖 Guru Advice</h3>
