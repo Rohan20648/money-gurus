@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { store } from "../../_store";
+import { users, portfolios } from "@/lib/store";
+
 
 export async function POST(req: Request) {
   const { username, portfolio } = await req.json();
