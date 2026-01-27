@@ -30,7 +30,7 @@ export default function Home() {
         {/* PROBLEM */}
         <section className="grid md:grid-cols-2 gap-10">
           <div className="bg-white/5 backdrop-blur p-8 rounded-2xl shadow-lg hover:-translate-y-1 transition">
-            <h2 className="text-2xl font-bold mb-3">❌ The Problem</h2>
+            <h2 className="text-2xl font-bold mb-3"> The Problem</h2>
             <p className="text-gray-300">
               Most finance apps act like digital passbooks. They show where money
               went — but not whether those decisions were smart, risky, or
@@ -39,7 +39,7 @@ export default function Home() {
           </div>
 
           <div className="bg-white/5 backdrop-blur p-8 rounded-2xl shadow-lg hover:-translate-y-1 transition">
-            <h2 className="text-2xl font-bold mb-3">✅ Our Insight</h2>
+            <h2 className="text-2xl font-bold mb-3"> Our Insight</h2>
             <p className="text-gray-300">
               Wealth isn’t built by tracking money — it’s built by understanding
               the quality of decisions behind it.
@@ -54,15 +54,15 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "📥 Input Habits",
+                title: " Input Habits",
                 desc: "Users enter income, expenses, savings, investments, and borrowing behavior."
               },
               {
-                title: "📊 Analyze Quality",
+                title: " Analyze Quality",
                 desc: "We evaluate discipline, not wealth, across spending, savings, and investments."
               },
               {
-                title: "🧠 Guide Action",
+                title: " Guide Action",
                 desc: "A monthly Guru Score and AI mentor suggest how to improve next month."
               }
             ].map((item, i) => (
@@ -80,7 +80,7 @@ export default function Home() {
         {/* USERS */}
         <section className="grid md:grid-cols-2 gap-10">
           <div className="bg-white/5 backdrop-blur p-8 rounded-2xl hover:-translate-y-1 transition">
-            <h3 className="text-2xl font-bold mb-3">🎓 Student Mode</h3>
+            <h3 className="text-2xl font-bold mb-3"> Student Mode</h3>
             <p className="text-gray-300">
               Students can borrow money only equal to their locked savings.
               Missed repayments are auto-deducted — teaching responsibility
@@ -89,7 +89,7 @@ export default function Home() {
           </div>
 
           <div className="bg-white/5 backdrop-blur p-8 rounded-2xl hover:-translate-y-1 transition">
-            <h3 className="text-2xl font-bold mb-3">👔 Salaried Mode</h3>
+            <h3 className="text-2xl font-bold mb-3"> Salaried Mode</h3>
             <p className="text-gray-300">
               Working professionals get insights into expense quality, savings
               discipline, credit usage, and long-term investment health.
