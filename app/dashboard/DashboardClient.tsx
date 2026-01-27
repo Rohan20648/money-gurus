@@ -1,10 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function Dashboard() {
-  const params = useSearchParams();
-  const userType = params.get("type");
+export default function DashboardClient() {
+  const searchParams = useSearchParams();
+  const userType = searchParams.get("userType") || "student";
 
   const [income, setIncome] = useState<number | "">("");
   const [recurring, setRecurring] = useState<number | "">("");
@@ -14,34 +15,28 @@ export default function Dashboard() {
   const [investment, setInvestment] = useState<number | "">("");
   const [score, setScore] = useState(0);
 
-  // 🔐 auth guard
-  useEffect(() => {
-    const user = localStorage.getItem("moneyguruUser");
-    if (!user) window.location.href = "/select-user";
-  }, []);
-
-  // ✅ SAFE SCORE CALCULATION
   function computeScore() {
+    let points = 0;
     const i = Number(income) || 0;
-    const s = Number(savings) || 0;
+    const r = Number(recurring) || 0;
     const l = Number(leisure) || 0;
+    const s = Number(savings) || 0;
+    const e = Number(emergency) || 0;
     const inv = Number(investment) || 0;
 
-    let points = 0;
-
-    if (s >= i * 0.2) points += 3;
-    else if (s >= i * 0.1) points += 2;
+    if (r <= i * 0.5) points += 2;
     else points += 1;
 
     if (l <= i * 0.3) points += 2;
     else points += 1;
 
-    if (inv > 0) points += 3;
+    if (s > 0) points += 2;
+    if (e > 0) points += 2;
+    if (inv > 0) points += 2;
 
-    return points;
+    return Math.min(points, 10);
   }
 
-  // ✅ RESTORED ORIGINAL FLOW
   function goToPortfolio() {
     const finalScore = computeScore();
     setScore(finalScore);
@@ -57,13 +52,10 @@ export default function Dashboard() {
       score: finalScore,
     };
 
-    // ⭐ THIS IS THE KEY LINE ⭐
     localStorage.setItem("portfolioData", JSON.stringify(portfolio));
-
     window.location.href = "/portfolio";
   }
 
-  // helper for numeric inputs
   const num =
     (setter: (v: number | "") => void) =>
     (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -78,7 +70,6 @@ export default function Dashboard() {
       </h1>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* INPUT CARD */}
         <div className="bg-white/5 backdrop-blur p-6 rounded-2xl shadow-lg space-y-4 relative">
           <h2 className="font-bold">Enter Details</h2>
 
@@ -124,7 +115,6 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* SCORE CARD */}
         <div className="bg-white/5 backdrop-blur p-6 rounded-2xl shadow-lg text-center space-y-4">
           <h2 className="font-bold">Monthly Guru Score</h2>
           <div className="text-6xl font-bold">{score}/10</div>
@@ -133,3 +123,4 @@ export default function Dashboard() {
     </main>
   );
 }
+
