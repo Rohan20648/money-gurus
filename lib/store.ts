@@ -1,18 +1,19 @@
-export type User = {
-  username: string;
-  userType: "student" | "adult";
-};
+import { NextResponse } from "next/server";
+import { users } from "@/lib/store";
 
-export type Portfolio = {
-  income: number;
-  recurring: number;
-  leisure: number;
-  savings: number;
-  emergency: number;
-  investment: number;
-  borrow?: number;
-  score: number;
-};
+export async function POST(req: Request) {
+  const { username, userType } = await req.json();
 
-export const users = new Map<string, User>();
-export const portfolios = new Map<string, Portfolio>();
+  if (!users.has(username)) {
+    users.set(username, {
+      username,
+      userType,
+    });
+  }
+
+  return NextResponse.json({
+    success: true,
+    user: users.get(username),
+  });
+}
+
