@@ -1,53 +1,97 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
-export default function LoginClient() {
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/dashboard";
+export default function Login() {
+  const params = useSearchParams();
+  const router = useRouter();
+
+  const userType = params.get("type");
 
   const [username, setUsername] = useState("");
-  const [userType, setUserType] = useState<"student" | "adult">("student");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleLogin() {
-    localStorage.setItem(
-      "moneyguruUser",
-      JSON.stringify({ username, userType })
-    );
+  async function handleLogin() {
+    if (!username || !password) {
+      alert("Please enter username and password");
+      return;
+    }
 
-    window.location.href = redirect;
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,   // ✅ now included
+          userType,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await res.json();
+
+      localStorage.setItem(
+        "moneyguruUser",
+        JSON.stringify({
+          username: data.username,
+          userType: data.userType,
+        })
+      );
+
+      // ✅ Next.js-friendly navigation
+      router.push(`/dashboard?type=${userType}`);
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-black text-white">
-      <div className="bg-white/5 p-8 rounded-2xl space-y-4 w-96">
-        <h1 className="text-2xl font-bold text-center">Login</h1>
+    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center px-6">
+      <div className="bg-white/5 backdrop-blur p-10 rounded-2xl shadow-lg w-full max-w-md space-y-6">
+
+        <h1 className="text-3xl font-bold text-center">
+          {userType === "student"
+            ? "🎓 Student Login"
+            : "👔 Professional Login"}
+        </h1>
 
         <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="text"
           placeholder="Username"
-          className="w-full p-3 rounded bg-black/40"
+          className="w-full bg-black/40 text-white placeholder-gray-400 border border-white/20 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+          onChange={(e) => setUsername(e.target.value)}
         />
 
-        <select
-          value={userType}
-          onChange={(e) => setUserType(e.target.value as any)}
-          className="w-full p-3 rounded bg-black/40"
-        >
-          <option value="student">Student</option>
-          <option value="adult">Working Adult</option>
-        </select>
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full bg-black/40 text-white placeholder-gray-400 border border-white/20 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-500 text-black py-3 rounded-xl font-semibold"
+          disabled={loading}
+          className="w-full bg-green-500 text-black py-3 rounded-xl font-semibold hover:scale-105 transition disabled:opacity-50"
         >
-          Login →
+          {loading ? "Signing In..." : "Sign In →"}
         </button>
+
+        <p className="text-gray-400 text-sm text-center">
+          Demo login • No real authentication
+        </p>
+
       </div>
     </main>
   );
 }
-
