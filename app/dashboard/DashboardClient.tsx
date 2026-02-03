@@ -1,4 +1,4 @@
-"use client";
+,"use client";
 
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -23,15 +23,44 @@ export default function DashboardClient() {
     const e = Number(emergency) || 0;
     const inv = Number(investment) || 0;
 
-    let total = 0;
+    let savingsScore = 0;
+    let emergencyScore = 0;
+    let leisureScore = 0;
+    let investmentScore = 0;
+    let balanceScore = 0;
 
-    if (i > 0 && s / i >= 0.2) total += 3;
-    if (r > 0 && e / r >= 3) total += 2;
-    if (i > 0 && l / i <= 0.25) total += 2;
-    if (i > 0 && inv / i >= 0.1) total += 2;
-    if (i >= r + l + inv) total += 1;
+    const savingsRate = i > 0 ? s / i : 0;
+    const emergencyMonths = r > 0 ? e / r : 0;
+    const leisureRate = i > 0 ? l / i : 0;
+    const investmentRate = i > 0 ? inv / i : 0;
 
-    return Math.min(total, 10);
+    if (savingsRate >= 0.25) savingsScore = 3;
+    else if (savingsRate >= 0.20) savingsScore = 2.5;
+    else if (savingsRate >= 0.15) savingsScore = 2;
+    else if (savingsRate >= 0.10) savingsScore = 1.5;
+    else if (savingsRate > 0) savingsScore = 1;
+
+    if (emergencyMonths >= 6) emergencyScore = 2;
+    else if (emergencyMonths >= 3) emergencyScore = 1.5;
+    else if (emergencyMonths >= 1) emergencyScore = 1;
+
+    if (leisureRate <= 0.15) leisureScore = 2;
+    else if (leisureRate <= 0.25) leisureScore = 1.5;
+    else if (leisureRate <= 0.35) leisureScore = 1;
+
+    if (investmentRate >= 0.20) investmentScore = 2;
+    else if (investmentRate >= 0.10) investmentScore = 1.5;
+    else if (investmentRate > 0) investmentScore = 1;
+
+    if (i >= r + l + inv) balanceScore = 1;
+
+    return Math.round(
+      savingsScore +
+      emergencyScore +
+      leisureScore +
+      investmentScore +
+      balanceScore
+    );
   }
 
   function goToPortfolio() {
@@ -53,40 +82,89 @@ export default function DashboardClient() {
     window.location.href = "/portfolio";
   }
 
+  const num =
+    (setter: (v: number | "") => void) =>
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setter(e.target.value === "" ? "" : Number(e.target.value));
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-4 md:px-8 py-6 md:py-12">
+    <main className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-8 py-12">
       <div className="max-w-6xl mx-auto">
 
         <header className="mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+          <h1 className="text-5xl font-bold tracking-tight">
             {userType === "student"
               ? "Student Finance Hub"
               : "Personal Finance Hub"}
           </h1>
+          <p className="text-gray-400 mt-2 text-lg">
+            A smarter way to understand your money
+          </p>
         </header>
 
-        <div className="relative grid grid-cols-1 lg:grid-cols-5 gap-10">
+        <div className="relative grid lg:grid-cols-5 gap-10">
 
+          {/* Floating input section */}
           <section className="lg:col-span-3 space-y-6">
             <h2 className="text-2xl font-semibold">Monthly Snapshot</h2>
 
+            <div className="grid md:grid-cols-2 gap-x-6 gap-y-5">
+              <Input label="Monthly Income" value={income} onChange={num(setIncome)} />
+              <Input label="Recurring Costs" value={recurring} onChange={num(setRecurring)} />
+              <Input label="Leisure Spending" value={leisure} onChange={num(setLeisure)} />
+              <Input label="Savings" value={savings} onChange={num(setSavings)} />
+              <Input label="Emergency Fund" value={emergency} onChange={num(setEmergency)} />
+              <Input label="Monthly Investments" value={investment} onChange={num(setInvestment)} />
+            </div>
+
             <button
               onClick={goToPortfolio}
-              className="mt-4 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full font-semibold"
+              className="mt-4 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition rounded-full font-semibold"
             >
               Generate Smart Report →
             </button>
           </section>
 
+          {/* Score floating panel */}
           <section className="lg:col-span-2 flex items-center justify-center">
-            <div className="text-6xl md:text-9xl font-extrabold">
-              {score}
+            <div className="relative">
+              <div className="absolute -inset-6 bg-blue-600/20 blur-3xl rounded-full"></div>
+
+              <div className="relative text-center">
+                <p className="text-gray-400 mb-2">Your Financial Score</p>
+                <div className="text-9xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                  {score}
+                </div>
+                <p className="text-gray-500">out of 10</p>
+              </div>
             </div>
           </section>
 
         </div>
       </div>
     </main>
+  );
+}
+
+function Input({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number | "";
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <div>
+      <label className="block text-sm text-gray-400 mb-1">{label}</label>
+      <input
+        type="number"
+        value={value}
+        onChange={onChange}
+        className="w-full bg-transparent border-b border-gray-700 focus:border-blue-500 outline-none p-2 text-lg transition"
+      />
+    </div>
   );
 }
 
