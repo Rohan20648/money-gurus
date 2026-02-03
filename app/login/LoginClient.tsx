@@ -59,13 +59,12 @@ export default function Login() {
 
   return (
     <main
-      className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-6`}
+      className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-4 md:px-6`}
     >
-      <div className="max-w-md w-full animate-fade-in space-y-10">
+      <div className="max-w-md w-full animate-fade-in space-y-6 md:space-y-10">
 
-        {/* Header */}
         <header className="text-center space-y-3">
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight">
             {userType === "student"
               ? "Student Login"
               : "Professional Login"}
@@ -76,7 +75,6 @@ export default function Login() {
           </p>
         </header>
 
-        {/* Form Area */}
         <section className="space-y-6">
 
           <div>
@@ -116,23 +114,7 @@ export default function Login() {
         </footer>
 
       </div>
-
-      <style jsx>{`
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </main>
   );
 }
+
