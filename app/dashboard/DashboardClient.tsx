@@ -34,39 +34,33 @@ export default function DashboardClient() {
     const leisureRate = i > 0 ? l / i : 0;
     const investmentRate = i > 0 ? inv / i : 0;
 
-    // Savings (max 3)
     if (savingsRate >= 0.25) savingsScore = 3;
     else if (savingsRate >= 0.20) savingsScore = 2.5;
     else if (savingsRate >= 0.15) savingsScore = 2;
     else if (savingsRate >= 0.10) savingsScore = 1.5;
     else if (savingsRate > 0) savingsScore = 1;
 
-    // Emergency fund (max 2)
     if (emergencyMonths >= 6) emergencyScore = 2;
     else if (emergencyMonths >= 3) emergencyScore = 1.5;
     else if (emergencyMonths >= 1) emergencyScore = 1;
 
-    // Leisure spending (max 2)
     if (leisureRate <= 0.15) leisureScore = 2;
     else if (leisureRate <= 0.25) leisureScore = 1.5;
     else if (leisureRate <= 0.35) leisureScore = 1;
 
-    // Investments (max 2)
     if (investmentRate >= 0.20) investmentScore = 2;
     else if (investmentRate >= 0.10) investmentScore = 1.5;
     else if (investmentRate > 0) investmentScore = 1;
 
-    // Balance (max 1)
     if (i >= r + l + inv) balanceScore = 1;
 
-    const finalScore =
+    return Math.round(
       savingsScore +
       emergencyScore +
       leisureScore +
       investmentScore +
-      balanceScore;
-
-    return Math.round(finalScore);
+      balanceScore
+    );
   }
 
   function goToPortfolio() {
@@ -94,66 +88,77 @@ export default function DashboardClient() {
       setter(e.target.value === "" ? "" : Number(e.target.value));
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white p-10">
-      <h1 className="text-3xl font-bold mb-6">
-        {userType === "student"
-          ? "🎓 Student Dashboard"
-          : "👔 Working Adult Dashboard"}
-      </h1>
+    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white p-10">
+      <div className="max-w-5xl mx-auto space-y-8">
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white/5 backdrop-blur p-6 rounded-2xl shadow-lg space-y-4 relative">
-          <h2 className="font-bold">Enter Details</h2>
+        <header className="space-y-2">
+          <h1 className="text-4xl font-extrabold tracking-tight">
+            {userType === "student"
+              ? "Student Finance Dashboard"
+              : "Personal Finance Dashboard"}
+          </h1>
+          <p className="text-gray-400">
+            Enter your monthly details to analyze financial health
+          </p>
+        </header>
 
-          <input type="number" value={income} placeholder="Monthly Income"
-            className="w-full bg-black/40 p-3 rounded-xl"
-            onChange={num(setIncome)} />
+        <div className="grid lg:grid-cols-3 gap-8">
 
-          <input type="number" value={recurring} placeholder="Recurring Costs"
-            className="w-full bg-black/40 p-3 rounded-xl"
-            onChange={num(setRecurring)} />
+          <div className="lg:col-span-2 bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-xl space-y-5">
+            <h2 className="text-xl font-semibold">Financial Details</h2>
 
-          <input type="number" value={leisure} placeholder="Leisure Spending"
-            className="w-full bg-black/40 p-3 rounded-xl"
-            onChange={num(setLeisure)} />
+            <div className="grid md:grid-cols-2 gap-4">
+              <Input label="Monthly Income" value={income} onChange={num(setIncome)} />
+              <Input label="Recurring Costs" value={recurring} onChange={num(setRecurring)} />
+              <Input label="Leisure Spending" value={leisure} onChange={num(setLeisure)} />
+              <Input label="Savings" value={savings} onChange={num(setSavings)} />
+              <Input label="Emergency Fund" value={emergency} onChange={num(setEmergency)} />
+              <Input label="Monthly Investments" value={investment} onChange={num(setInvestment)} />
+            </div>
 
-          <input type="number" value={savings} placeholder="Savings"
-            className="w-full bg-black/40 p-3 rounded-xl"
-            onChange={num(setSavings)} />
+            <button
+              onClick={goToPortfolio}
+              className="w-full bg-blue-600 hover:bg-blue-500 transition text-white py-3 rounded-2xl font-semibold"
+            >
+              Analyze Portfolio →
+            </button>
+          </div>
 
-          <input type="number" value={emergency} placeholder="Emergency Fund"
-            className="w-full bg-black/40 p-3 rounded-xl"
-            onChange={num(setEmergency)} />
+          <div className="bg-gradient-to-b from-blue-600/20 to-transparent border border-blue-500/20 backdrop-blur-xl p-8 rounded-3xl shadow-xl text-center">
+            <h2 className="text-lg text-gray-300">Your Financial Score</h2>
+            <div className="text-8xl font-extrabold mt-4">
+              {score}
+            </div>
+            <p className="text-gray-400 mt-3">
+              Out of 10
+            </p>
+          </div>
 
-          <input type="number" value={investment} placeholder="Investments / month"
-            className="w-full bg-black/40 p-3 rounded-xl"
-            onChange={num(setInvestment)} />
-
-          <button
-            onClick={goToPortfolio}
-            className="w-full bg-blue-500 text-black py-3 rounded-xl font-semibold hover:scale-105 transition"
-          >
-            View Portfolio →
-          </button>
-
-          <button
-            onClick={() => {
-              localStorage.removeItem("moneyguruUser");
-              window.location.href = "/";
-            }}
-            className="absolute top-6 right-6 text-sm text-gray-400 hover:text-white"
-          >
-            Logout
-          </button>
-        </div>
-
-        <div className="bg-white/5 backdrop-blur p-6 rounded-2xl shadow-lg text-center space-y-4">
-          <h2 className="font-bold">Monthly Guru Score</h2>
-          <div className="text-6xl font-bold">{score}/10</div>
         </div>
       </div>
     </main>
   );
 }
 
+function Input({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number | "";
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <div className="space-y-1">
+      <label className="text-sm text-gray-400">{label}</label>
+      <input
+        type="number"
+        value={value}
+        onChange={onChange}
+        className="w-full bg-black/40 border border-white/10 focus:border-blue-500 outline-none p-3 rounded-xl"
+      />
+    </div>
+  );
+}
 
