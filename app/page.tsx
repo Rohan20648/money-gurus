@@ -9,18 +9,18 @@ export default function Home() {
     <main
       className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white`}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
 
         {/* HERO AREA */}
         <section className="min-h-[90vh] flex flex-col justify-center animate-fade-in">
 
           <div className="space-y-6 max-w-4xl">
-            <h1 className="text-7xl font-extrabold tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-tight">
               Build better money habits  
               with <span className="text-green-400">MoneyGuru</span>
             </h1>
 
-            <p className="text-gray-400 text-xl leading-relaxed max-w-3xl">
+            <p className="text-gray-400 text-base md:text-xl leading-relaxed max-w-3xl">
               A smart financial companion that focuses on the quality of your decisions,  
               not just the size of your bank balance.
             </p>
@@ -93,7 +93,6 @@ export default function Home() {
 
         </section>
 
-        {/* CLEAN FOOTER */}
         <footer className="text-center text-gray-600 text-sm pb-10">
           MoneyGuru • Focused on financial discipline, not just data
         </footer>
