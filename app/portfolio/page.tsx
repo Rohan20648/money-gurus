@@ -44,48 +44,51 @@ export default function Portfolio() {
     fetchAdvice();
   }, [data]);
 
-  if (!data) return <div className="text-white p-10">No portfolio found</div>;
+  if (!data) return null;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white p-10">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <main className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-8 py-12">
+      <div className="max-w-6xl mx-auto space-y-12">
 
         <header>
-          <h1 className="text-4xl font-extrabold">Your Financial Portfolio</h1>
-          <p className="text-gray-400">
-            Personalized analysis based on your inputs
+          <h1 className="text-5xl font-bold">Financial Overview</h1>
+          <p className="text-gray-400 mt-2">
+            A clear picture of your money habits
           </p>
         </header>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-
-          <div className="bg-blue-600/10 border border-blue-500/20 p-8 rounded-3xl text-center">
-            <h2 className="text-gray-300">Financial Health Score</h2>
-            <div className="text-8xl font-extrabold mt-3">{data.score}</div>
-            <p className="text-gray-400">out of 10</p>
+        {/* Hero Score */}
+        <section className="flex items-center gap-10">
+          <div className="text-8xl font-extrabold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            {data.score}
           </div>
-
-          <div className="lg:col-span-2 grid md:grid-cols-2 gap-4">
-            <Stat title="Income" value={data.income} />
-            <Stat title="Recurring" value={data.recurring} />
-            <Stat title="Leisure" value={data.leisure} />
-            <Stat title="Savings" value={data.savings} />
-            <Stat title="Emergency" value={data.emergency} />
-            <Stat title="Investment" value={data.investment} />
+          <div>
+            <h2 className="text-2xl font-semibold">Overall Health Score</h2>
+            <p className="text-gray-400">Calculated from your financial behavior</p>
           </div>
+        </section>
 
-        </div>
+        {/* Metrics - modern strips */}
+        <section className="space-y-4">
+          <Metric label="Income" value={data.income} />
+          <Metric label="Recurring Costs" value={data.recurring} />
+          <Metric label="Leisure Spending" value={data.leisure} />
+          <Metric label="Savings" value={data.savings} />
+          <Metric label="Emergency Fund" value={data.emergency} />
+          <Metric label="Monthly Investments" value={data.investment} />
+        </section>
 
-        <section className="bg-white/5 border border-white/10 p-8 rounded-3xl">
-          <h3 className="text-2xl font-semibold mb-4">Smart Insights</h3>
+        {/* Insights */}
+        <section>
+          <h2 className="text-3xl font-semibold mb-6">Smart Insights</h2>
 
-          {loading && <p className="text-gray-400">Analyzing finances...</p>}
+          {loading && <p className="text-gray-400">Analyzing your finances...</p>}
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             {advice.map((a, i) => (
               <div
                 key={i}
-                className="bg-black/40 border border-white/10 p-4 rounded-xl"
+                className="border-l-4 border-blue-500 pl-5 text-lg leading-relaxed text-gray-200"
               >
                 {a}
               </div>
@@ -98,12 +101,13 @@ export default function Portfolio() {
   );
 }
 
-function Stat({ title, value }: { title: string; value: number }) {
+function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <div className="bg-black/40 border border-white/10 p-5 rounded-2xl">
-      <p className="text-gray-400">{title}</p>
-      <p className="text-3xl font-bold">₹{value}</p>
+    <div className="flex justify-between items-center border-b border-gray-800 pb-3">
+      <span className="text-gray-400">{label}</span>
+      <span className="text-2xl font-semibold">₹{value}</span>
     </div>
   );
 }
+
 
