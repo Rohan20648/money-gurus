@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Login() {
   const params = useSearchParams();
@@ -27,7 +30,7 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username,
-          password,   // ✅ now included
+          password,
           userType,
         }),
       });
@@ -46,7 +49,6 @@ export default function Login() {
         })
       );
 
-      // ✅ Next.js-friendly navigation
       router.push(`/dashboard?type=${userType}`);
     } catch (error) {
       alert("Something went wrong. Please try again.");
@@ -56,42 +58,81 @@ export default function Login() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center px-6">
-      <div className="bg-white/5 backdrop-blur p-10 rounded-2xl shadow-lg w-full max-w-md space-y-6">
+    <main
+      className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-6`}
+    >
+      <div className="max-w-md w-full animate-fade-in space-y-10">
 
-        <h1 className="text-3xl font-bold text-center">
-          {userType === "student"
-            ? "🎓 Student Login"
-            : "👔 Professional Login"}
-        </h1>
+        {/* Header */}
+        <header className="text-center space-y-3">
+          <h1 className="text-4xl font-bold tracking-tight">
+            {userType === "student"
+              ? "Student Login"
+              : "Professional Login"}
+          </h1>
 
-        <input
-          type="text"
-          placeholder="Username"
-          className="w-full bg-black/40 text-white placeholder-gray-400 border border-white/20 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-          onChange={(e) => setUsername(e.target.value)}
-        />
+          <p className="text-gray-400">
+            Access your personalized financial dashboard
+          </p>
+        </header>
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full bg-black/40 text-white placeholder-gray-400 border border-white/20 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        {/* Form Area */}
+        <section className="space-y-6">
 
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-          className="w-full bg-green-500 text-black py-3 rounded-xl font-semibold hover:scale-105 transition disabled:opacity-50"
-        >
-          {loading ? "Signing In..." : "Sign In →"}
-        </button>
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">
+              Username
+            </label>
+            <input
+              type="text"
+              className="w-full bg-transparent border-b border-gray-700 focus:border-green-500 outline-none p-3 transition"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-        <p className="text-gray-400 text-sm text-center">
+          <div>
+            <label className="block text-sm text-gray-400 mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              className="w-full bg-transparent border-b border-gray-700 focus:border-green-500 outline-none p-3 transition"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button
+            onClick={handleLogin}
+            disabled={loading}
+            className="w-full mt-4 px-8 py-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-black font-semibold hover:scale-105 transition disabled:opacity-50"
+          >
+            {loading ? "Signing In..." : "Sign In →"}
+          </button>
+
+        </section>
+
+        <footer className="text-center text-gray-600 text-sm">
           Demo login • No real authentication
-        </p>
+        </footer>
 
       </div>
+
+      <style jsx>{`
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </main>
   );
 }
