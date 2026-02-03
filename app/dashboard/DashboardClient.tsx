@@ -88,26 +88,27 @@ export default function DashboardClient() {
       setter(e.target.value === "" ? "" : Number(e.target.value));
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white p-10">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <main className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-8 py-12">
+      <div className="max-w-6xl mx-auto">
 
-        <header className="space-y-2">
-          <h1 className="text-4xl font-extrabold tracking-tight">
+        <header className="mb-12">
+          <h1 className="text-5xl font-bold tracking-tight">
             {userType === "student"
-              ? "Student Finance Dashboard"
-              : "Personal Finance Dashboard"}
+              ? "Student Finance Hub"
+              : "Personal Finance Hub"}
           </h1>
-          <p className="text-gray-400">
-            Enter your monthly details to analyze financial health
+          <p className="text-gray-400 mt-2 text-lg">
+            A smarter way to understand your money
           </p>
         </header>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="relative grid lg:grid-cols-5 gap-10">
 
-          <div className="lg:col-span-2 bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-xl space-y-5">
-            <h2 className="text-xl font-semibold">Financial Details</h2>
+          {/* Floating input section */}
+          <section className="lg:col-span-3 space-y-6">
+            <h2 className="text-2xl font-semibold">Monthly Snapshot</h2>
 
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-x-6 gap-y-5">
               <Input label="Monthly Income" value={income} onChange={num(setIncome)} />
               <Input label="Recurring Costs" value={recurring} onChange={num(setRecurring)} />
               <Input label="Leisure Spending" value={leisure} onChange={num(setLeisure)} />
@@ -118,21 +119,26 @@ export default function DashboardClient() {
 
             <button
               onClick={goToPortfolio}
-              className="w-full bg-blue-600 hover:bg-blue-500 transition text-white py-3 rounded-2xl font-semibold"
+              className="mt-4 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition rounded-full font-semibold"
             >
-              Analyze Portfolio →
+              Generate Smart Report →
             </button>
-          </div>
+          </section>
 
-          <div className="bg-gradient-to-b from-blue-600/20 to-transparent border border-blue-500/20 backdrop-blur-xl p-8 rounded-3xl shadow-xl text-center">
-            <h2 className="text-lg text-gray-300">Your Financial Score</h2>
-            <div className="text-8xl font-extrabold mt-4">
-              {score}
+          {/* Score floating panel */}
+          <section className="lg:col-span-2 flex items-center justify-center">
+            <div className="relative">
+              <div className="absolute -inset-6 bg-blue-600/20 blur-3xl rounded-full"></div>
+
+              <div className="relative text-center">
+                <p className="text-gray-400 mb-2">Your Financial Score</p>
+                <div className="text-9xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                  {score}
+                </div>
+                <p className="text-gray-500">out of 10</p>
+              </div>
             </div>
-            <p className="text-gray-400 mt-3">
-              Out of 10
-            </p>
-          </div>
+          </section>
 
         </div>
       </div>
@@ -150,13 +156,13 @@ function Input({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <div className="space-y-1">
-      <label className="text-sm text-gray-400">{label}</label>
+    <div>
+      <label className="block text-sm text-gray-400 mb-1">{label}</label>
       <input
         type="number"
         value={value}
         onChange={onChange}
-        className="w-full bg-black/40 border border-white/10 focus:border-blue-500 outline-none p-3 rounded-xl"
+        className="w-full bg-transparent border-b border-gray-700 focus:border-blue-500 outline-none p-2 text-lg transition"
       />
     </div>
   );
