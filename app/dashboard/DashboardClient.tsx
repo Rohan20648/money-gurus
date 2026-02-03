@@ -16,7 +16,6 @@ export default function DashboardClient() {
   const [score, setScore] = useState(0);
 
   function computeScore() {
-    let points = 0;
     const i = Number(income) || 0;
     const r = Number(recurring) || 0;
     const l = Number(leisure) || 0;
@@ -24,17 +23,50 @@ export default function DashboardClient() {
     const e = Number(emergency) || 0;
     const inv = Number(investment) || 0;
 
-    if (r <= i * 0.5) points += 2;
-    else points += 1;
+    let savingsScore = 0;
+    let emergencyScore = 0;
+    let leisureScore = 0;
+    let investmentScore = 0;
+    let balanceScore = 0;
 
-    if (l <= i * 0.3) points += 2;
-    else points += 1;
+    const savingsRate = i > 0 ? s / i : 0;
+    const emergencyMonths = r > 0 ? e / r : 0;
+    const leisureRate = i > 0 ? l / i : 0;
+    const investmentRate = i > 0 ? inv / i : 0;
 
-    if (s > 0) points += 2;
-    if (e > 0) points += 2;
-    if (inv > 0) points += 2;
+    // Savings (max 3)
+    if (savingsRate >= 0.25) savingsScore = 3;
+    else if (savingsRate >= 0.20) savingsScore = 2.5;
+    else if (savingsRate >= 0.15) savingsScore = 2;
+    else if (savingsRate >= 0.10) savingsScore = 1.5;
+    else if (savingsRate > 0) savingsScore = 1;
 
-    return Math.min(points, 10);
+    // Emergency fund (max 2)
+    if (emergencyMonths >= 6) emergencyScore = 2;
+    else if (emergencyMonths >= 3) emergencyScore = 1.5;
+    else if (emergencyMonths >= 1) emergencyScore = 1;
+
+    // Leisure spending (max 2)
+    if (leisureRate <= 0.15) leisureScore = 2;
+    else if (leisureRate <= 0.25) leisureScore = 1.5;
+    else if (leisureRate <= 0.35) leisureScore = 1;
+
+    // Investments (max 2)
+    if (investmentRate >= 0.20) investmentScore = 2;
+    else if (investmentRate >= 0.10) investmentScore = 1.5;
+    else if (investmentRate > 0) investmentScore = 1;
+
+    // Balance (max 1)
+    if (i >= r + l + inv) balanceScore = 1;
+
+    const finalScore =
+      savingsScore +
+      emergencyScore +
+      leisureScore +
+      investmentScore +
+      balanceScore;
+
+    return Math.round(finalScore);
   }
 
   function goToPortfolio() {
@@ -123,4 +155,5 @@ export default function DashboardClient() {
     </main>
   );
 }
+
 
