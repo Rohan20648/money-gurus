@@ -8,38 +8,83 @@ const inter = Inter({ subsets: ["latin"] });
 export default function SelectUser() {
   return (
     <main
-      className={`${inter.className} min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex items-center justify-center`}
+      className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-6`}
     >
-      <section className="bg-white/5 backdrop-blur p-10 rounded-2xl shadow-lg space-y-6 text-center max-w-md w-full animate-fade-in">
+      <div className="max-w-4xl w-full space-y-12 animate-fade-in">
 
-        <h2 className="text-4xl font-bold">Who are you?</h2>
-        <p className="text-gray-300 text-lg">
-          Choose a profile to personalize your financial journey.
-        </p>
+        {/* Header */}
+        <header className="text-center space-y-3">
+          <h2 className="text-5xl font-bold tracking-tight">
+            Choose Your Profile
+          </h2>
 
-        <Link href="/login?type=student">
-          <button className="w-full bg-green-500 text-black py-3 rounded-xl text-lg font-semibold hover:scale-105 transition-transform">
-            🎓 Student
-          </button>
-        </Link>
+          <p className="text-gray-400 text-lg">
+            Select the experience that best matches your financial stage
+          </p>
+        </header>
 
-        <Link href="/login?type=adult">
-          <button className="w-full bg-blue-500 text-black py-3 rounded-xl text-lg font-semibold hover:scale-105 transition-transform">
-            👔 Working Professional
-          </button>
-        </Link>
+        {/* Options */}
+        <section className="grid md:grid-cols-2 gap-10">
 
-      </section>
+          {/* Student Option */}
+          <Link href="/login?type=student">
+            <div className="group cursor-pointer relative rounded-3xl p-10 transition hover:scale-[1.02]">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/10 rounded-3xl blur-xl opacity-60 group-hover:opacity-100 transition"></div>
 
-      {/* same animation as home */}
+              <div className="relative border border-green-500/20 bg-black/40 backdrop-blur-xl rounded-3xl p-8 h-full">
+                <h3 className="text-2xl font-semibold mb-2">
+                  Student
+                </h3>
+
+                <p className="text-gray-400">
+                  Build responsible money habits, manage allowance, and learn financial discipline in a safe environment.
+                </p>
+
+                <div className="mt-6 text-sm text-green-400 opacity-0 group-hover:opacity-100 transition">
+                  Continue as Student →
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Professional Option */}
+          <Link href="/login?type=adult">
+            <div className="group cursor-pointer relative rounded-3xl p-10 transition hover:scale-[1.02]">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-600/10 rounded-3xl blur-xl opacity-60 group-hover:opacity-100 transition"></div>
+
+              <div className="relative border border-blue-500/20 bg-black/40 backdrop-blur-xl rounded-3xl p-8 h-full">
+                <h3 className="text-2xl font-semibold mb-2">
+                  Working Professional
+                </h3>
+
+                <p className="text-gray-400">
+                  Track income, expenses, savings, and investments with intelligent insights for long-term growth.
+                </p>
+
+                <div className="mt-6 text-sm text-blue-400 opacity-0 group-hover:opacity-100 transition">
+                  Continue as Professional →
+                </div>
+              </div>
+            </div>
+          </Link>
+
+        </section>
+
+        <footer className="text-center text-gray-600 text-sm">
+          Your data is used only to personalize the experience
+        </footer>
+
+      </div>
+
       <style jsx>{`
         .animate-fade-in {
-          animation: fadeIn 1s ease-out forwards;
+          animation: fadeIn 0.8s ease-out forwards;
         }
+
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
@@ -50,3 +95,4 @@ export default function SelectUser() {
     </main>
   );
 }
+
