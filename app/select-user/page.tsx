@@ -8,13 +8,12 @@ const inter = Inter({ subsets: ["latin"] });
 export default function SelectUser() {
   return (
     <main
-      className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-6`}
+      className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-4 md:px-6`}
     >
       <div className="max-w-4xl w-full space-y-12 animate-fade-in">
 
-        {/* Header */}
         <header className="text-center space-y-3">
-          <h2 className="text-5xl font-bold tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
             Choose Your Profile
           </h2>
 
@@ -23,47 +22,32 @@ export default function SelectUser() {
           </p>
         </header>
 
-        {/* Options */}
         <section className="grid md:grid-cols-2 gap-10">
 
-          {/* Student Option */}
           <Link href="/login?type=student">
-            <div className="group cursor-pointer relative rounded-3xl p-10 transition hover:scale-[1.02]">
+            <div className="group cursor-pointer relative rounded-3xl p-6 md:p-10 transition hover:scale-[1.02]">
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/10 rounded-3xl blur-xl opacity-60 group-hover:opacity-100 transition"></div>
 
               <div className="relative border border-green-500/20 bg-black/40 backdrop-blur-xl rounded-3xl p-8 h-full">
-                <h3 className="text-2xl font-semibold mb-2">
-                  Student
-                </h3>
+                <h3 className="text-2xl font-semibold mb-2">Student</h3>
 
                 <p className="text-gray-400">
                   Build responsible money habits, manage allowance, and learn financial discipline in a safe environment.
                 </p>
-
-                <div className="mt-6 text-sm text-green-400 opacity-0 group-hover:opacity-100 transition">
-                  Continue as Student →
-                </div>
               </div>
             </div>
           </Link>
 
-          {/* Professional Option */}
           <Link href="/login?type=adult">
-            <div className="group cursor-pointer relative rounded-3xl p-10 transition hover:scale-[1.02]">
+            <div className="group cursor-pointer relative rounded-3xl p-6 md:p-10 transition hover:scale-[1.02]">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-600/10 rounded-3xl blur-xl opacity-60 group-hover:opacity-100 transition"></div>
 
               <div className="relative border border-blue-500/20 bg-black/40 backdrop-blur-xl rounded-3xl p-8 h-full">
-                <h3 className="text-2xl font-semibold mb-2">
-                  Working Professional
-                </h3>
+                <h3 className="text-2xl font-semibold mb-2">Working Professional</h3>
 
                 <p className="text-gray-400">
                   Track income, expenses, savings, and investments with intelligent insights for long-term growth.
                 </p>
-
-                <div className="mt-6 text-sm text-blue-400 opacity-0 group-hover:opacity-100 transition">
-                  Continue as Professional →
-                </div>
               </div>
             </div>
           </Link>
@@ -75,24 +59,6 @@ export default function SelectUser() {
         </footer>
 
       </div>
-
-      <style jsx>{`
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </main>
   );
 }
-
