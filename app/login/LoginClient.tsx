@@ -41,21 +41,22 @@ export default function Login() {
 
       const data = await res.json();
 
+      // FIXED: Correctly read API response structure
       localStorage.setItem(
         "moneyguruUser",
         JSON.stringify({
-          username: data.username,
-          userType: data.userType,
+          username: data.user.username,
+          userType: data.user.userType,
         })
       );
 
       const existing = localStorage.getItem("portfolioData");
 
-if (existing) {
-  router.push("/portfolio");
-} else {
-  router.push(`/dashboard?type=${userType}`);
-}
+      if (existing) {
+        router.push("/portfolio");
+      } else {
+        router.push(`/dashboard?type=${userType}`);
+      }
 
     } catch (error) {
       alert("Something went wrong. Please try again.");
@@ -117,19 +118,17 @@ if (existing) {
         </section>
 
         <footer className="text-center text-gray-400 text-sm space-y-2">
-  <p>Don’t have an account?</p>
+          <p>Don’t have an account?</p>
 
-  <button
-    onClick={() => router.push(`/signup?type=${userType}`)}
-    className="text-green-400 underline"
-  >
-    Create Account
-  </button>
-</footer>
-
+          <button
+            onClick={() => router.push(`/signup?type=${userType}`)}
+            className="text-green-400 underline"
+          >
+            Create Account
+          </button>
+        </footer>
 
       </div>
     </main>
   );
 }
-
