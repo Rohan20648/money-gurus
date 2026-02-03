@@ -6,109 +6,99 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white`}>
+    <main
+      className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white`}
+    >
+      <div className="max-w-6xl mx-auto px-6">
 
-      {/* HERO SECTION */}
-      <section className="min-h-[80vh] flex flex-col items-center justify-center px-6 text-center">
-        <h1 className="text-7xl font-extrabold tracking-tight animate-fade-in">
-          Money<span className="text-green-400">Guru</span>
-        </h1>
+        {/* HERO AREA */}
+        <section className="min-h-[90vh] flex flex-col justify-center animate-fade-in">
 
-        <p className="text-gray-400 text-xl max-w-3xl mt-6 leading-relaxed">
-          Intelligent financial guidance that turns daily money decisions  
-          into structured, long-term financial discipline.
-        </p>
+          <div className="space-y-6 max-w-4xl">
+            <h1 className="text-7xl font-extrabold tracking-tight leading-tight">
+              Build better money habits  
+              with <span className="text-green-400">MoneyGuru</span>
+            </h1>
 
-        <Link href="/select-user">
-          <button className="mt-10 px-12 py-4 rounded-full bg-green-500 text-black font-semibold text-lg hover:scale-105 transition-transform">
-            Launch Application →
-          </button>
-        </Link>
-      </section>
-
-      {/* SUBTLE DIVIDER */}
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
-
-      {/* VALUE PROPOSITION */}
-      <section className="max-w-5xl mx-auto px-6 py-24 text-center space-y-6">
-        <h2 className="text-4xl font-bold">Beyond Basic Tracking</h2>
-
-        <p className="text-gray-400 text-lg leading-relaxed">
-          Traditional finance apps only display transactions.  
-          MoneyGuru evaluates the <span className="text-white">quality of financial behavior</span>—  
-          helping you understand whether your habits are moving you toward security and growth.
-        </p>
-      </section>
-
-      {/* HOW IT WORKS – CLEAN STRUCTURE */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-center mb-16">How MoneyGuru Works</h2>
-
-        <div className="grid md:grid-cols-3 gap-12 text-center">
-
-          <div>
-            <h3 className="text-2xl font-semibold mb-2">Capture Data</h3>
-            <p className="text-gray-400">
-              Enter income, expenses, savings, and investment details to create a clear monthly snapshot.
+            <p className="text-gray-400 text-xl leading-relaxed max-w-3xl">
+              A smart financial companion that focuses on the quality of your decisions,  
+              not just the size of your bank balance.
             </p>
+
+            <div className="pt-6">
+              <Link href="/select-user">
+                <button className="px-14 py-4 rounded-full bg-green-500 text-black font-semibold text-lg hover:scale-105 transition-transform">
+                  Enter MoneyGuru →
+                </button>
+              </Link>
+            </div>
           </div>
 
-          <div>
-            <h3 className="text-2xl font-semibold mb-2">Analyze Discipline</h3>
-            <p className="text-gray-400">
-              Our engine measures financial behavior rather than just account balances.
-            </p>
+        </section>
+
+        {/* SINGLE HIGHLIGHT SECTION */}
+        <section className="pb-32">
+
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+
+            <div className="space-y-6">
+              <h2 className="text-4xl font-bold">
+                Finance apps track.  
+                MoneyGuru teaches.
+              </h2>
+
+              <p className="text-gray-400 text-lg leading-relaxed">
+                Instead of just showing where your money went, MoneyGuru evaluates  
+                whether your financial behavior is healthy, risky, or improving.
+              </p>
+
+              <p className="text-gray-400 text-lg leading-relaxed">
+                Each month you receive a clear Guru Score and actionable insights  
+                designed to gradually strengthen your financial discipline.
+              </p>
+            </div>
+
+            <div className="border-l border-gray-700 pl-10 space-y-8">
+
+              <div>
+                <h3 className="text-2xl font-semibold mb-2">
+                  Clear Inputs
+                </h3>
+                <p className="text-gray-400">
+                  Simple monthly details: income, expenses, savings, and investments.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold mb-2">
+                  Intelligent Analysis
+                </h3>
+                <p className="text-gray-400">
+                  We evaluate discipline and balance instead of raw totals.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold mb-2">
+                  Practical Guidance
+                </h3>
+                <p className="text-gray-400">
+                  Personalized advice to help you improve month after month.
+                </p>
+              </div>
+
+            </div>
+
           </div>
 
-          <div>
-            <h3 className="text-2xl font-semibold mb-2">Receive Guidance</h3>
-            <p className="text-gray-400">
-              A monthly Guru Score and tailored insights help you improve intelligently over time.
-            </p>
-          </div>
+        </section>
 
-        </div>
-      </section>
+        {/* CLEAN FOOTER */}
+        <footer className="text-center text-gray-600 text-sm pb-10">
+          MoneyGuru • Focused on financial discipline, not just data
+        </footer>
 
-      {/* USER TYPES – ELEGANT STYLE */}
-      <section className="max-w-5xl mx-auto px-6 py-20 space-y-16">
-
-        <div>
-          <h3 className="text-3xl font-bold mb-3">Student Profile</h3>
-          <p className="text-gray-400 leading-relaxed">
-            Designed to build responsible financial habits early.  
-            Smart borrowing rules and structured limits encourage accountability without risk.
-          </p>
-        </div>
-
-        <div>
-          <h3 className="text-3xl font-bold mb-3">Working Professional Profile</h3>
-          <p className="text-gray-400 leading-relaxed">
-            Gain clarity on expense quality, savings discipline, and investment consistency  
-            to maintain long-term financial health.
-          </p>
-        </div>
-
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="text-center py-24">
-        <h2 className="text-4xl font-bold mb-4">Take Control of Your Finances</h2>
-        <p className="text-gray-400 mb-8">
-          Simple inputs. Smart analysis. Clear direction.
-        </p>
-
-        <Link href="/select-user">
-          <button className="px-12 py-4 rounded-full bg-green-500 text-black font-semibold hover:scale-105 transition">
-            Get Started →
-          </button>
-        </Link>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="text-center text-gray-600 text-sm pb-10">
-        MoneyGuru • Financial discipline powered by intelligent insights
-      </footer>
+      </div>
 
       <style jsx>{`
         .animate-fade-in {
@@ -129,4 +119,3 @@ export default function Home() {
     </main>
   );
 }
-
