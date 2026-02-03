@@ -17,42 +17,45 @@ type PortfolioData = {
 
 export default function Portfolio() {
   const [data, setData] = useState<PortfolioData | null>(null);
-  const [advice, setAdvice] = useState("");
+  const [advice, setAdvice] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // 1️⃣ Load portfolio from localStorage
+  // Load portfolio from localStorage
   useEffect(() => {
     const stored = localStorage.getItem("portfolioData");
     if (!stored) return;
     setData(JSON.parse(stored));
   }, []);
 
-  // 2️⃣ Generate AI-style advice (client-side)
+  // Call backend API to get detailed insights
   useEffect(() => {
     if (!data) return;
 
-    const tips: string[] = [];
+    async function fetchAdvice() {
+      try {
+        setLoading(true);
 
-    if (data.savings < data.income * 0.2) {
-      tips.push("Try increasing your savings to at least 20% of your income.");
+        const res = await fetch("/api/advice", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (result.advice) {
+          setAdvice(result.advice);
+        }
+      } catch (error) {
+        setAdvice(["Unable to generate financial insights at the moment."]);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    if (data.leisure > data.income * 0.3) {
-      tips.push("Your leisure spending is high. Consider setting a monthly cap.");
-    }
-
-    if (data.investment === 0) {
-      tips.push("Starting a small monthly investment can significantly improve long-term wealth.");
-    }
-
-    if (data.emergency < data.income * 3) {
-      tips.push("Build an emergency fund covering at least 3 months of income.");
-    }
-
-    if (tips.length === 0) {
-      tips.push("Excellent financial discipline. Maintain your current habits.");
-    }
-
-    setAdvice(tips.join(" "));
+    fetchAdvice();
   }, [data]);
 
   if (!data) {
@@ -69,7 +72,6 @@ export default function Portfolio() {
     >
       <div className="max-w-6xl mx-auto space-y-10">
 
-        {/* Header */}
         <section className="text-center space-y-2">
           <h1 className="text-5xl font-bold">Financial Portfolio</h1>
           <p className="text-gray-300 text-lg">
@@ -79,7 +81,6 @@ export default function Portfolio() {
           </p>
         </section>
 
-        {/* Score */}
         <section className="bg-white/5 backdrop-blur p-8 rounded-2xl shadow-lg text-center">
           <h2 className="text-xl text-gray-300">Monthly Guru Score</h2>
           <div className="text-7xl font-bold mt-2">
@@ -87,7 +88,6 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* Stats Grid */}
         <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Stat title="💰 Monthly Income / Allowance" value={`₹${data.income}`} />
           <Stat title="🔁 Recurring Costs" value={`₹${data.recurring}`} />
@@ -98,20 +98,31 @@ export default function Portfolio() {
         </section>
 
         {data.userType === "student" && (
-  <button
-    onClick={() => (window.location.href = "/borrow")}
-    className="w-full bg-yellow-400 text-black py-3 rounded-xl font-semibold hover:scale-105 transition"
-  >
-    🤝 Borrow Money
-  </button>
-)}
+          <button
+            onClick={() => (window.location.href = "/borrow")}
+            className="w-full bg-yellow-400 text-black py-3 rounded-xl font-semibold hover:scale-105 transition"
+          >
+            🤝 Borrow Money
+          </button>
+        )}
 
         {/* 🤖 Guru Advice */}
         <section className="bg-white/5 backdrop-blur p-6 rounded-2xl shadow-lg">
-          <h3 className="text-xl font-bold mb-2">🤖 Guru Advice</h3>
-          <p className="text-gray-300 leading-relaxed">
-            {advice}
-          </p>
+          <h3 className="text-xl font-bold mb-4">🤖 Guru Advice</h3>
+
+          {loading && (
+            <p className="text-gray-300">Generating personalized insights...</p>
+          )}
+
+          {!loading && advice.length > 0 && (
+            <div className="space-y-4">
+              {advice.map((item, index) => (
+                <p key={index} className="text-gray-300 leading-relaxed">
+                  • {item}
+                </p>
+              ))}
+            </div>
+          )}
         </section>
 
       </div>
@@ -127,3 +138,4 @@ function Stat({ title, value }: { title: string; value: string }) {
     </div>
   );
 }
+
