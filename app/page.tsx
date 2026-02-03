@@ -6,105 +6,110 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className={`${inter.className} min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white`}>
-      <div className="max-w-6xl mx-auto px-6 py-16 space-y-20">
+    <main className={`${inter.className} min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white`}>
 
-        {/* HERO */}
-        <section className="text-center space-y-6 animate-fade-in">
-          <h1 className="text-6xl font-extrabold tracking-tight">
-            Money<span className="text-green-400">Guru</span>
-          </h1>
+      {/* HERO SECTION */}
+      <section className="min-h-[80vh] flex flex-col items-center justify-center px-6 text-center">
+        <h1 className="text-7xl font-extrabold tracking-tight animate-fade-in">
+          Money<span className="text-green-400">Guru</span>
+        </h1>
 
-          <p className="text-gray-300 text-xl max-w-2xl mx-auto">
-            A digital financial mentor that transforms everyday money decisions
-            into long-term wealth discipline.
+        <p className="text-gray-400 text-xl max-w-3xl mt-6 leading-relaxed">
+          Intelligent financial guidance that turns daily money decisions  
+          into structured, long-term financial discipline.
+        </p>
+
+        <Link href="/select-user">
+          <button className="mt-10 px-12 py-4 rounded-full bg-green-500 text-black font-semibold text-lg hover:scale-105 transition-transform">
+            Launch Application →
+          </button>
+        </Link>
+      </section>
+
+      {/* SUBTLE DIVIDER */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+
+      {/* VALUE PROPOSITION */}
+      <section className="max-w-5xl mx-auto px-6 py-24 text-center space-y-6">
+        <h2 className="text-4xl font-bold">Beyond Basic Tracking</h2>
+
+        <p className="text-gray-400 text-lg leading-relaxed">
+          Traditional finance apps only display transactions.  
+          MoneyGuru evaluates the <span className="text-white">quality of financial behavior</span>—  
+          helping you understand whether your habits are moving you toward security and growth.
+        </p>
+      </section>
+
+      {/* HOW IT WORKS – CLEAN STRUCTURE */}
+      <section className="max-w-6xl mx-auto px-6 py-20">
+        <h2 className="text-4xl font-bold text-center mb-16">How MoneyGuru Works</h2>
+
+        <div className="grid md:grid-cols-3 gap-12 text-center">
+
+          <div>
+            <h3 className="text-2xl font-semibold mb-2">Capture Data</h3>
+            <p className="text-gray-400">
+              Enter income, expenses, savings, and investment details to create a clear monthly snapshot.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-semibold mb-2">Analyze Discipline</h3>
+            <p className="text-gray-400">
+              Our engine measures financial behavior rather than just account balances.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-semibold mb-2">Receive Guidance</h3>
+            <p className="text-gray-400">
+              A monthly Guru Score and tailored insights help you improve intelligently over time.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* USER TYPES – ELEGANT STYLE */}
+      <section className="max-w-5xl mx-auto px-6 py-20 space-y-16">
+
+        <div>
+          <h3 className="text-3xl font-bold mb-3">Student Profile</h3>
+          <p className="text-gray-400 leading-relaxed">
+            Designed to build responsible financial habits early.  
+            Smart borrowing rules and structured limits encourage accountability without risk.
           </p>
+        </div>
 
-          <Link href="/select-user">
-            <button className="mt-6 px-10 py-4 rounded-xl bg-green-500 text-black font-semibold text-lg hover:scale-105 transition-transform">
-              Get Started →
-            </button>
-          </Link>
-        </section>
+        <div>
+          <h3 className="text-3xl font-bold mb-3">Working Professional Profile</h3>
+          <p className="text-gray-400 leading-relaxed">
+            Gain clarity on expense quality, savings discipline, and investment consistency  
+            to maintain long-term financial health.
+          </p>
+        </div>
 
-        {/* PROBLEM */}
-        <section className="grid md:grid-cols-2 gap-10">
-          <div className="bg-white/5 backdrop-blur p-8 rounded-2xl shadow-lg hover:-translate-y-1 transition">
-            <h2 className="text-2xl font-bold mb-3"> The Problem</h2>
-            <p className="text-gray-300">
-              Most finance apps act like digital passbooks. They show where money
-              went — but not whether those decisions were smart, risky, or
-              silently sabotaging the future.
-            </p>
-          </div>
+      </section>
 
-          <div className="bg-white/5 backdrop-blur p-8 rounded-2xl shadow-lg hover:-translate-y-1 transition">
-            <h2 className="text-2xl font-bold mb-3"> Our Insight</h2>
-            <p className="text-gray-300">
-              Wealth isn’t built by tracking money — it’s built by understanding
-              the quality of decisions behind it.
-            </p>
-          </div>
-        </section>
+      {/* FINAL CTA */}
+      <section className="text-center py-24">
+        <h2 className="text-4xl font-bold mb-4">Take Control of Your Finances</h2>
+        <p className="text-gray-400 mb-8">
+          Simple inputs. Smart analysis. Clear direction.
+        </p>
 
-        {/* HOW IT WORKS */}
-        <section className="space-y-10">
-          <h2 className="text-4xl font-bold text-center">How MoneyGuru Works</h2>
+        <Link href="/select-user">
+          <button className="px-12 py-4 rounded-full bg-green-500 text-black font-semibold hover:scale-105 transition">
+            Get Started →
+          </button>
+        </Link>
+      </section>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: " Input Habits",
-                desc: "Users enter income, expenses, savings, investments, and borrowing behavior."
-              },
-              {
-                title: " Analyze Quality",
-                desc: "We evaluate discipline, not wealth, across spending, savings, and investments."
-              },
-              {
-                title: " Guide Action",
-                desc: "A monthly Guru Score and AI mentor suggest how to improve next month."
-              }
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-white/5 backdrop-blur p-6 rounded-2xl text-center hover:-translate-y-2 transition"
-              >
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-gray-300">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* FOOTER */}
+      <footer className="text-center text-gray-600 text-sm pb-10">
+        MoneyGuru • Financial discipline powered by intelligent insights
+      </footer>
 
-        {/* USERS */}
-        <section className="grid md:grid-cols-2 gap-10">
-          <div className="bg-white/5 backdrop-blur p-8 rounded-2xl hover:-translate-y-1 transition">
-            <h3 className="text-2xl font-bold mb-3"> Student Mode</h3>
-            <p className="text-gray-300">
-              Students can borrow money only equal to their locked savings.
-              Missed repayments are auto-deducted — teaching responsibility
-              without financial ruin.
-            </p>
-          </div>
-
-          <div className="bg-white/5 backdrop-blur p-8 rounded-2xl hover:-translate-y-1 transition">
-            <h3 className="text-2xl font-bold mb-3"> Salaried Mode</h3>
-            <p className="text-gray-300">
-              Working professionals get insights into expense quality, savings
-              discipline, credit usage, and long-term investment health.
-            </p>
-          </div>
-        </section>
-
-        {/* FOOTER */}
-        <footer className="text-center text-gray-500 text-sm pt-10">
-          Built for hackathon demo • Focused on discipline, not just data
-        </footer>
-
-      </div>
-
-      {/* Animations */}
       <style jsx>{`
         .animate-fade-in {
           animation: fadeIn 1s ease-out forwards;
@@ -113,7 +118,7 @@ export default function Home() {
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
