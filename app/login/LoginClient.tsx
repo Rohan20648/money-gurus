@@ -109,9 +109,17 @@ export default function Login() {
 
         </section>
 
-        <footer className="text-center text-gray-600 text-sm">
-          Demo login • No real authentication
-        </footer>
+        <footer className="text-center text-gray-400 text-sm space-y-2">
+  <p>Don’t have an account?</p>
+
+  <button
+    onClick={() => router.push(`/signup?type=${userType}`)}
+    className="text-green-400 underline"
+  >
+    Create Account
+  </button>
+</footer>
+
 
       </div>
     </main>
