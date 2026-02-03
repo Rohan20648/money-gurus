@@ -49,7 +49,14 @@ export default function Login() {
         })
       );
 
-      router.push(`/dashboard?type=${userType}`);
+      const existing = localStorage.getItem("portfolioData");
+
+if (existing) {
+  router.push("/portfolio");
+} else {
+  router.push(`/dashboard?type=${userType}`);
+}
+
     } catch (error) {
       alert("Something went wrong. Please try again.");
     } finally {
